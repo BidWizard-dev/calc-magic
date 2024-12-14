@@ -23,6 +23,17 @@ body, html {
   font-size: 4.5em;
   padding: 20px;
   text-align: right;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 1.2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.display.multiline {
+  font-size: 3em;
 }
 
 .buttons {
@@ -36,7 +47,7 @@ button {
   font-size: 1.8em;
   border: none;
   background-color: #505050;
-  color: rgb(128, 26, 26);
+  color: rgb(252, 250, 250);
   cursor: pointer;
   border-radius: 50%;
   aspect-ratio: 1;
@@ -50,8 +61,8 @@ button {
 }
 
 .calculator-icon {
-  width: 20px;
-  height: 20px;
+  width: 34px;
+  height: 40px;
   margin: auto;
 }
 
@@ -69,7 +80,7 @@ button.orange {
   }
   
   .calculator-icon {
-    width: 18px;
-    height: 18px;
+    width: 34px;
+    height: 40px;
   }
 }
