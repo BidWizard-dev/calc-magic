@@ -1,6 +1,7 @@
 // src/Calculator.js
 import React, { useState } from 'react';
 import './Calculator.css';
+import calcIcon from './calc.png';
 
 function Calculator() {
   const [display, setDisplay] = useState('');
@@ -41,8 +42,15 @@ function Calculator() {
         <button onClick={() => handleButtonClick('2')}>2</button>
         <button onClick={() => handleButtonClick('3')}>3</button>
         <button className="orange" onClick={() => handleButtonClick('+')}>+</button>
+        <button>
+          <img 
+            src={calcIcon} 
+            alt="calculator"
+            className="calculator-icon"
+          />
+        </button>
         <button className="zero" onClick={() => handleButtonClick('0')}>0</button>
-        <button onClick={() => handleButtonClick('.')}>.</button>
+        <button className="dot" onClick={() => handleButtonClick('.')}>.</button>
         <button className="orange" onClick={handleCalculate}>=</button>
       </div>
     </div>
