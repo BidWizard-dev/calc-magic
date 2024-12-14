@@ -64,7 +64,7 @@ function Calculator() {
         const customValue = parseFloat(customNumber);
         const difference = customValue - finalValue;
         setDisplay(finalValue.toString());
-        setCurrentEquation(`${finalValue} + ...`);
+        setCurrentEquation(`${finalValue} +`);
 
         // Disable all buttons except "="
         setButtonsDisabled(true);
@@ -122,7 +122,7 @@ function Calculator() {
       setButtonsDisabled(true);
 
       // Show "..." during the initial 3-second delay
-      setCurrentEquation(`${finalValue} + ...`);
+      setCurrentEquation(`${finalValue} +`);
 
       // Start the animation after a 3-second delay
       setTimeout(() => {
