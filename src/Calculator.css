@@ -2,7 +2,6 @@ body, html {
   margin: 0;
   padding: 0;
   background-color: black;
-  -webkit-text-size-adjust: 100%;
 }
 
 .calculator {
@@ -16,7 +15,6 @@ body, html {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
 }
 
 .display {
@@ -31,22 +29,19 @@ body, html {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  padding-bottom: env(safe-area-inset-bottom); /* For iPhone notch */
 }
 
 button {
   font-size: 2em;
   border: none;
   background-color: #505050;
-  color: rgb(204, 14, 14);
+  color: white;
   cursor: pointer;
   border-radius: 50%;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-appearance: none;
-  touch-action: manipulation;
 }
 
 .calculator-icon {
@@ -60,17 +55,4 @@ button.gray {
 
 button.orange {
   background-color: #ff9500;
-}
-
-/* iOS-specific fixes */
-@supports (-webkit-touch-callout: none) {
-  .buttons {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  
-  button {
-    width: 100%;
-    height: 0;
-    padding-bottom: 100%;
-  }
 }
