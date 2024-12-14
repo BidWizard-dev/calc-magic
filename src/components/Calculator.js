@@ -97,10 +97,10 @@ function Calculator() {
               setWaitingForOperand(true);
               setTimestampDifference(difference);
 
-              // Re-enable buttons except "="
-              setButtonsDisabled(false);
+              // Re-enable only the "=" button
+              setButtonsDisabled(true);
             }
-          }, 500);
+          }, 200);
         }, 3000);
 
         return;
@@ -155,7 +155,7 @@ function Calculator() {
             // Re-enable buttons except "="
             setButtonsDisabled(false);
           }
-        }, 500);
+        }, 200);
       }, 3000);
 
       return;
@@ -259,72 +259,72 @@ function Calculator() {
         <button
           className="gray"
           onClick={() => handleNumber('+/-')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           +/-
         </button>
         <button
           className="gray"
           onClick={() => handleNumber('%')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           %
         </button>
         <button
           className="orange"
           onClick={() => handleOperatorWrapper('÷')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           ÷
         </button>
 
-        <button onClick={() => handleNumber('7')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('7')} disabled={buttonsDisabled || isTimestampPending}>
           7
         </button>
-        <button onClick={() => handleNumber('8')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('8')} disabled={buttonsDisabled || isTimestampPending}>
           8
         </button>
-        <button onClick={() => handleNumber('9')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('9')} disabled={buttonsDisabled || isTimestampPending}>
           9
         </button>
         <button
           className="orange"
           onClick={() => handleOperatorWrapper('×')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           ×
         </button>
 
-        <button onClick={() => handleNumber('4')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('4')} disabled={buttonsDisabled || isTimestampPending}>
           4
         </button>
-        <button onClick={() => handleNumber('5')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('5')} disabled={buttonsDisabled || isTimestampPending}>
           5
         </button>
-        <button onClick={() => handleNumber('6')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('6')} disabled={buttonsDisabled || isTimestampPending}>
           6
         </button>
         <button
           className="orange"
           onClick={() => handleOperatorWrapper('-')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           -
         </button>
 
-        <button onClick={() => handleNumber('1')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('1')} disabled={buttonsDisabled || isTimestampPending}>
           1
         </button>
-        <button onClick={() => handleNumber('2')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('2')} disabled={buttonsDisabled || isTimestampPending}>
           2
         </button>
-        <button onClick={() => handleNumber('3')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('3')} disabled={buttonsDisabled || isTimestampPending}>
           3
         </button>
         <button
           className="orange"
           onClick={() => handleOperatorWrapper('+')}
-          disabled={buttonsDisabled}
+          disabled={buttonsDisabled || isTimestampPending}
         >
           +
         </button>
@@ -332,10 +332,10 @@ function Calculator() {
         <button disabled={buttonsDisabled} onClick={handleCalcIconClick}>
           <img src={calcIcon} alt="calculator" className="calculator-icon" />
         </button>
-        <button onClick={() => handleNumber('0')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('0')} disabled={buttonsDisabled || isTimestampPending}>
           0
         </button>
-        <button onClick={() => handleNumber('.')} disabled={buttonsDisabled}>
+        <button onClick={() => handleNumber('.')} disabled={buttonsDisabled || isTimestampPending}>
           .
         </button>
         <button
