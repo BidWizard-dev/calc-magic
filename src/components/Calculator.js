@@ -12,6 +12,9 @@ function Calculator() {
   const [isTimestampPending, setIsTimestampPending] = useState(false);
   const [timestampDifference, setTimestampDifference] = useState(null);
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [useCustomNumber, setUseCustomNumber] = useState(false);
+  const [customNumber, setCustomNumber] = useState('');
 
   const handleNumber = (num) => {
     if (buttonsDisabled) return;
@@ -57,6 +60,52 @@ function Calculator() {
         finalValue = calculate(previousValue, current, operator);
       }
 
+      if (useCustomNumber) {
+        const customValue = parseFloat(customNumber);
+        const difference = customValue - finalValue;
+        setDisplay(finalValue.toString());
+        setCurrentEquation(`${finalValue} + ...`);
+
+        // Disable all buttons except "="
+        setButtonsDisabled(true);
+
+        // Start the animation after a 3-second delay
+        setTimeout(() => {
+          const diffStr = Math.abs(difference).toString(); // Handle negative differences
+          const steps = [];
+          for (let i = 1; i <= diffStr.length; i++) {
+            steps.push(diffStr.substring(0, i));
+          }
+
+          let stepIndex = 0;
+          const interval = setInterval(() => {
+            const currentStep = steps[stepIndex];
+            const newValue = parseInt(currentStep, 10);
+            const displayedValue = difference < 0 ? -newValue : newValue;
+
+            setDisplay(displayedValue.toString());
+            setCurrentEquation(`${finalValue} + ${displayedValue}`);
+
+            stepIndex += 1;
+            if (stepIndex >= steps.length) {
+              clearInterval(interval);
+
+              // Update relevant states
+              setIsTimestampPending(true);
+              setPreviousValue(finalValue);
+              setOperator('+');
+              setWaitingForOperand(true);
+              setTimestampDifference(difference);
+
+              // Re-enable buttons except "="
+              setButtonsDisabled(false);
+            }
+          }, 500);
+        }, 3000);
+
+        return;
+      }
+
       const now = new Date();
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const day = String(now.getDate()).padStart(2, '0');
@@ -73,36 +122,38 @@ function Calculator() {
       setButtonsDisabled(true);
 
       // Show "..." during the initial 3-second delay
-      setCurrentEquation(`${finalValue} +`);
+      setCurrentEquation(`${finalValue} + ...`);
 
       // Start the animation after a 3-second delay
       setTimeout(() => {
-        let currentValue = finalValue;
-        const totalSteps = 6; // 3 seconds / 0.5 seconds per step
-        const increment = difference / totalSteps;
-        let stepsCompleted = 0;
+        const diffStr = Math.abs(difference).toString(); // Handle negative differences
+        const steps = [];
+        for (let i = 1; i <= diffStr.length; i++) {
+          steps.push(diffStr.substring(0, i));
+        }
 
+        let stepIndex = 0;
         const interval = setInterval(() => {
-          stepsCompleted += 1;
-          currentValue += increment;
+          const currentStep = steps[stepIndex];
+          const newValue = parseInt(currentStep, 10);
+          const displayedValue = difference < 0 ? -newValue : newValue;
 
-          if (stepsCompleted >= totalSteps) {
-            currentValue = finalValue + difference;
-            setDisplay(currentValue.toFixed(0));
-            setCurrentEquation(`${finalValue} + ${difference}`);
+          setDisplay(displayedValue.toString());
+          setCurrentEquation(`${finalValue} + ${displayedValue}`);
+
+          stepIndex += 1;
+          if (stepIndex >= steps.length) {
             clearInterval(interval);
 
-            // Enable only the "=" button
-            setIsTimestampPending(true);
-
             // Update relevant states
+            setIsTimestampPending(true);
             setPreviousValue(finalValue);
             setOperator('+');
             setWaitingForOperand(true);
             setTimestampDifference(difference);
-          } else {
-            setDisplay(currentValue.toFixed(0));
-            setCurrentEquation(`${finalValue} + ${currentValue.toFixed(0)}`);
+
+            // Re-enable buttons except "="
+            setButtonsDisabled(false);
           }
         }, 500);
       }, 3000);
@@ -168,6 +219,28 @@ function Calculator() {
   const handleClearWrapper = () => {
     if (buttonsDisabled) return;
     handleClear();
+  };
+
+  const handleCalcIconClick = () => {
+    setShowPopup(true);
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+
+  const handleCustomNumberChange = (e) => {
+    setCustomNumber(e.target.value);
+  };
+
+  const handleUseCustomNumber = () => {
+    setUseCustomNumber(true);
+    // Keep the popup open to allow input
+  };
+
+  const handleUseTimestamp = () => {
+    setUseCustomNumber(false);
+    setShowPopup(false);
   };
 
   return (
@@ -256,7 +329,7 @@ function Calculator() {
           +
         </button>
 
-        <button disabled={buttonsDisabled}>
+        <button disabled={buttonsDisabled} onClick={handleCalcIconClick}>
           <img src={calcIcon} alt="calculator" className="calculator-icon" />
         </button>
         <button onClick={() => handleNumber('0')} disabled={buttonsDisabled}>
@@ -273,6 +346,22 @@ function Calculator() {
           =
         </button>
       </div>
+
+      {showPopup && (
+        <div className="popup">
+          <button onClick={handleUseTimestamp}>Use Timestamp</button>
+          <button onClick={handleUseCustomNumber}>Use Custom Number</button>
+          {useCustomNumber && (
+            <input
+              type="number"
+              value={customNumber}
+              onChange={handleCustomNumberChange}
+              placeholder="Enter custom number"
+            />
+          )}
+          <button onClick={handlePopupClose}>Close</button>
+        </div>
+      )}
     </div>
   );
 }

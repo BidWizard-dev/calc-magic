@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import Calculator from './Calculator';
+import Calculator from './components/Calculator'; // Adjust the path based on your directory structure
 
 function App() {
   return (
