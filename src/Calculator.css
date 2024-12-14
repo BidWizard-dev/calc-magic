@@ -1,25 +1,20 @@
 body, html {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100vh;
   background-color: black;
-}
-
-#root {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
 }
 
 .calculator {
   width: 100%;
   max-width: 500px;
+  margin: 0 auto;
   background-color: black;
   padding: 8px;
   box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .display {
@@ -28,39 +23,36 @@ body, html {
   font-size: 4.5em;
   padding: 20px;
   text-align: right;
-  width: 100%;
-  box-sizing: border-box;
 }
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   width: 100%;
-  box-sizing: border-box;
 }
 
 button {
-  font-size: 2em;
+  font-size: 1.8em;
   border: none;
   background-color: #505050;
-  color: white;
+  color: rgb(128, 26, 26);
   cursor: pointer;
-  transition: background-color 0.2s;
   border-radius: 50%;
-  width: 100%;
   aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
   padding: 0;
   margin: 0;
-  min-width: 0;
+  width: 100%;
 }
 
 .calculator-icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
+  margin: auto;
 }
 
 button.gray {
@@ -69,5 +61,15 @@ button.gray {
 
 button.orange {
   background-color: #ff9500;
-  color: white;
+}
+
+@media screen and (max-width: 380px) {
+  button {
+    font-size: 1.5em;
+  }
+  
+  .calculator-icon {
+    width: 18px;
+    height: 18px;
+  }
 }
